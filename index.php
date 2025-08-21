@@ -93,7 +93,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
       <div class="logo">Auto<span>Concession</span></div>
       <nav style="margin-left:auto; display:flex; gap:10px;">
         <a class="btn" href="#">Accueil</a>
-        <a class="btn" href="#stock">Stock</a>
+        <a class="btn" href="stock.php">Stock</a>
         <a class="btn" href="#contact">Contact</a>
       </nav>
     </div>
@@ -132,7 +132,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
               <?php endif; ?>
               <div class="actions">
                 <span class="pill">ID #<?php echo e($v['id']); ?></span>
-                <a class="btn" href="vehicule.php?id=<?php echo urlencode((string)$v['id']); ?>">Voir la fiche</a>
+                <a class="btn" href="achat.html">Acheter</a>
               </div>
             </div>
           </article>
@@ -168,8 +168,8 @@ CREATE TABLE IF NOT EXISTS voitures (
 
 -- Exemples de véhicules
 INSERT INTO voitures (marque, modele, annee, prix, image_url, created_at) VALUES
-('Peugeot', '308 GT', 2023, 25990, NULL, NOW()),
 ('Renault', 'Clio V Intens', 2022, 17990, NULL, NOW() - INTERVAL 3 DAY),
+('Peugeot', '308 GT', 2023, 25990, NULL, NOW()),
 ('BMW', '320d xDrive', 2021, 33900, NULL, NOW() - INTERVAL 10 DAY),
 ('Toyota', 'Yaris Hybride', 2024, 23990, NULL, NOW() - INTERVAL 20 DAY);
 
