@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Achat de véhicule</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(180deg, #0b1220, #111827);
+      color: #e5e7eb;
+    }
+    .wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
+    header { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    h1 { margin: 0 0 10px; }
+    form {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.02);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    label { font-weight: 600; }
+    input, select {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 100%;
+    }
+    button {
+      padding: 12px;
+      border-radius: 8px;
+      background: #22d3ee;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #0ea5e9; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Finaliser votre achat</h1>
+      <p>Veuillez remplir les informations ci-dessous.</p>
+    </header>
+
+    <form>
+      <label for="nom">Nom complet</label>
+      <input type="text" id="nom" placeholder="Jean Dupont" required>
+
+      <label for="email">Adresse email</label>
+      <input type="email" id="email" placeholder="exemple@mail.com" required>
+
+      <label for="modepaiement">Mode de paiement</label>
+      <select id="modepaiement" required>
+        <option value="">-- Sélectionner --</option>
+        <option>Carte bancaire</option>
+        <option>Virement bancaire</option>
+        <option>Chèque</option>
+      </select>
+
+      <label for="adresse">Adresse de livraison</label>
+      <input type="text" id="adresse" placeholder="12 rue des Lilas, 75000 Paris">
+
+      <button type="submit">Confirmer l’achat</button>
+    </form>
+  </div>
+</body>
+</html>
