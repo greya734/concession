@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-// Vérifie que l'utilisateur est connecté (back‑office)
 if (empty($_SESSION['logged'])) {
     header('Location: admin.php');
     exit;
@@ -30,7 +28,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $modele = trim($_POST['modele'] ?? '');
     $annee = (int)($_POST['annee'] ?? 0);
     $prix = (float)($_POST['prix'] ?? 0);
-    $image_url = trim($_POST['image_url'] ?? '');
+
+    $image_path = null;
+    if (!empty($_FILES['image']['name'])) {
+        $targetDir = __DIR__ . "/uploads/";
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        $filename = time() . "_" . basename($_FILES['image']['name']);
+        $targetFile = $targetDir . $filename;
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+            $image_path = "uploads/" . $filename; // chemin relatif stocké en BDD
+        } else {
+            $message = "❌ Erreur lors du téléchargement de l'image.";
+        }
+    }
 
     if ($marque && $modele && $annee && $prix) {
         $stmt = $pdo->prepare("INSERT INTO voitures (marque, modele, annee, prix, image_url, created_at)
@@ -40,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'modele' => $modele,
             'annee' => $annee,
             'prix' => $prix,
-            'image_url' => $image_url ?: null,
+            'image_url' => $image_path,
         ]);
         $message = '✅ Véhicule ajouté avec succès !';
     } else {
@@ -52,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ajouter un véhicule</title>
   <style>
     body{margin:0;font-family:Arial, sans-serif;background:#f5f5f5;color:#111}
@@ -70,15 +83,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <header>
-    <h2>Back‑office — Ajouter un véhicule</h2>
+    <h2>Back-office — Ajouter un véhicule</h2>
   </header>
   <main class="wrap">
     <div class="card">
       <?php if ($message): ?>
-        <p class="msg"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p class="msg"><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p>
       <?php endif; ?>
 
-      <form method="post">
+      <form method="post" enctype="multipart/form-data">
         <div>
           <label for="marque">Marque *</label>
           <input type="text" name="marque" id="marque" required>
@@ -91,13 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label for="annee">Année *</label>
           <input type="number" name="annee" id="annee" required>
         </div>
+
         <div>
           <label for="prix">Prix (€) *</label>
           <input type="number" name="prix" id="prix" required>
         </div>
         <div>
-          <label for="image_url">URL de l'image</label>
-          <input type="url" name="image_url" id="image_url">
+          <label for="image">Image du véhicule</label>
+          <input type="file" name="image" id="image" accept="image/*">
         </div>
         <button type="submit">Ajouter</button>
       </form>
