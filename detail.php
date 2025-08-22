@@ -50,6 +50,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
     <div class="wrap">
       <h2>AutoConcession</h2>
     </div>
+    <a class="btn" href="admin.php" style="background:#ef4444;">Backend</a>
   </header>
 
   <main class="wrap">

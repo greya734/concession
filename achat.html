@@ -12,6 +12,7 @@
       color: #e5e7eb;
     }
     .wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
+    .nav { display: flex; align-items: center; gap: 20px; }
     header { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
     h1 { margin: 0 0 10px; }
     form {
@@ -45,6 +46,16 @@
 <body>
   <div class="wrap">
     <header>
+      <div class="wrap nav">
+        <nav style="margin-left:auto; display:flex; gap:10px;">
+          <a class="btn" href="admin.php" style="background:#ef4444;">Backend</a>   
+          <a class="btn" href="index.php">Accueil</a>
+          <a class="btn" href="stock.php">Stock</a>
+          <a class="btn" href="#contact">Contact</a>
+      </nav>
+        
+      </div>  
+      
       <h1>Finaliser votre achat</h1>
       <p>Veuillez remplir les informations ci-dessous.</p>
     </header>
@@ -69,6 +80,6 @@
 
       <button type="submit">Confirmer l’achat</button>
     </form>
-  </div>
+  <//div>div>
 </body>
 </html>
