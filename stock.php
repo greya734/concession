@@ -21,7 +21,21 @@ $stmt = $pdo->query("SELECT * FROM voitures ORDER BY created_at DESC");
 $voitures = $stmt->fetchAll();
 
 function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
+
+// Recherche
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+if ($search !== '') {
+    $stmt = $pdo->prepare("SELECT * FROM voitures 
+                           WHERE marque LIKE :s OR modele LIKE :s 
+                           ORDER BY created_at DESC");
+    $stmt->execute(['s' => "%$search%"]);
+} else {
+    $stmt = $pdo->query("SELECT * FROM voitures ORDER BY created_at DESC");
+}
+$voitures = $stmt->fetchAll();
+
 ?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -54,6 +68,10 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
     <?php if (!$voitures): ?>
       <p>Aucun véhicule en stock pour le moment.</p>
     <?php else: ?>
+    <form method="get" class="search">
+          <input type="text" name="search" placeholder="Rechercher par marque ou modèle..." value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">
+          <button type="submit">Rechercher</button>
+    </form>
       <div class="grid">
         <?php foreach ($voitures as $v): ?>
           <div class="card">
