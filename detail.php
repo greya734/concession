@@ -29,21 +29,9 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css"/> 
   <title>Détail du véhicule</title>
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; background: #f5f5f5; color: #111; }
-    header { background: #222; color: #fff; padding: 16px; }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 16px; }
-    .card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
-    .card img { width: 100%; border-radius: 12px; margin-bottom: 16px; }
-    h1 { margin-top: 0; }
-    .price { font-size: 22px; font-weight: bold; color: #2c7; margin: 12px 0; }
-    .meta { color: #555; margin-bottom: 20px; }
-    .actions { display:flex; gap:10px; }
-    a.btn { display: inline-block; padding: 10px 18px; background: #007bff; color: #fff; border-radius: 6px; text-decoration: none; }
-    a.btn:hover { background: #0056b3; }
-    a.back { background:#666; }
-  </style>
+
 </head>
 <body>
   <header>
@@ -71,8 +59,8 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
         <p><strong>Description :</strong> Ce véhicule est proposé par AutoConcession. Pour plus d'informations, contactez-nous ou passez commande via le formulaire d'achat.</p>
 
         <div class="actions">
-          <a href="achat.html" class="btn">Acheter ce véhicule</a>
-          <a href="stock.php" class="btn back">Retour au stock</a>
+          <a href="achat.html" class="btn ok">Acheter ce véhicule</a>
+          <a href="stock.php" class="btn">Retour au stock</a>
         </div>
       </div>
     <?php endif; ?>

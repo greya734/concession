@@ -31,7 +31,9 @@ $voitures = $stmt->fetchAll();
 
 function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
 ?>
+
 <!doctype html>
+<?php session_start(); ?>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -59,7 +61,9 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
     .logo span { color: var(--brand); }
     .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(148,163,184,.2); transition: transform .06s ease, background .2s ease; }
     .btn:hover { background: rgba(148,163,184,.08); transform: translateY(-1px); }
-
+    .ok{background:#22c55e;border-color:transparent; }
+    .suppr{background:rgba(255, 145, 0, 0.98);border-color:transparent; }
+    .error{color:#fecaca;background:#ce0000}
     .hero { padding: 36px 16px 8px; }
     .hero h1 { font-size: clamp(28px, 3vw, 36px); margin: 0 0 8px; }
     .hero p { margin: 0; color: var(--muted); }
@@ -85,18 +89,37 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
 
     footer { padding: 32px 16px; color: var(--muted); border-top: 1px solid rgba(148,163,184,.1); margin-top: 16px; }
     .empty { grid-column: 1 / -1; text-align: center; padding: 48px 16px; border: 2px dashed rgba(148,163,184,.2); border-radius: var(--radius); color: var(--muted); }
+    
+    
   </style>
 </head>
 <body>
   <header>
+  <!--bouttons navbar-->
     <div class="wrap nav">
       <div class="logo">Auto<span>Concession</span></div>
       <nav style="margin-left:auto; display:flex; gap:10px;">
         <a class="btn" href="#">Accueil</a>
         <a class="btn" href="stock.php">Stock</a>
         <a class="btn" href="#contact">Contact</a>
-      </nav>
+        <a class="btn suppr" href="admin.php" style="color:white;text-decoration:none;">admin</a>
+    
+    <!--utilisateur connecté -->
+    <?php if (!empty($_SESSION['client_id'])): ?>
+    <div class="user-menu">
+      <span class="user-icon">👤 <?= htmlspecialchars($_SESSION['client_nom']) ?></span>
+      <div class="dropdown">
+        <a class="btn ok" href="profil.php">Mon profil</a>
+        <a class="btn error" href="logout.php">Déconnexion</a>
+      </div>
     </div>
+  <?php else: ?>
+    <a class="btn ok" href="client_login.php" style="color:white;text-decoration:none;">Se connecter</a>
+  <?php endif; ?>      
+      </nav>
+
+    </div>
+    
   </header>
 
   <main class="wrap">
@@ -128,11 +151,11 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
               <div class="title"><?php echo e($titre); ?></div>
               <div class="meta">Année <?php echo e($v['annee']); ?> • Ajouté le <?php echo e($created->format('d/m/Y')); ?></div>
               <?php if ($v['prix'] !== null): ?>
-                <div class="price"><?php echo number_format((float)$v['prix'], 0, ',', ' '); ?> €</div>
+                <div class="price"><?php echo number_format((float)$v['prix'], 0, ',', ' '); ?></div>
               <?php endif; ?>
               <div class="actions">
                 <span class="pill">ID #<?php echo e($v['id']); ?></span>
-                <a class="btn" href="achat.html">Acheter</a>
+                <a class="btn ok" href="achat.php">Acheter</a>
               </div>
             </div>
           </article>
@@ -151,11 +174,12 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
 ============================
 Guide d'installation rapide
 ============================
-1) Créez la base et la table (phpMyAdmin > SQL) :
+1) base et la table
 
 CREATE DATABASE IF NOT EXISTS concession CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE concession;
 
+a) table des vehicules
 CREATE TABLE IF NOT EXISTS voitures (
   id INT AUTO_INCREMENT PRIMARY KEY,
   marque VARCHAR(80) NOT NULL,
@@ -173,9 +197,29 @@ INSERT INTO voitures (marque, modele, annee, prix, image_url, created_at) VALUES
 ('BMW', '320d xDrive', 2021, 33900, NULL, NOW() - INTERVAL 10 DAY),
 ('Toyota', 'Yaris Hybride', 2024, 23990, NULL, NOW() - INTERVAL 20 DAY);
 
+b) table des admins
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+c) table des utilisateurs
+CREATE TABLE clients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telephone VARCHAR(20),
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
 2) Placez ce fichier dans :
    C:\\xampp\\htdocs\\concession\\index.php (Windows)
-   ou /Applications/XAMPP/htdocs/concession/index.php (macOS)
+   ou /Applications/XAMPP/htdocs/concession/index.php (mac)
 
 3) Démarrez Apache & MySQL dans XAMPP, puis ouvrez :
    http://localhost/concession/

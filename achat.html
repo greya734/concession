@@ -4,51 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Achat de véhicule</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background: linear-gradient(180deg, #0b1220, #111827);
-      color: #e5e7eb;
-    }
-    .wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
-    .nav { display: flex; align-items: center; gap: 20px; }
-    header { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    h1 { margin: 0 0 10px; }
-    form {
-      display: grid;
-      gap: 16px;
-      margin-top: 20px;
-      background: rgba(255,255,255,0.02);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    label { font-weight: 600; }
-    input, select {
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      width: 100%;
-    }
-    button {
-      padding: 12px;
-      border-radius: 8px;
-      background: #22d3ee;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover { background: #0ea5e9; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wrap">
     <header>
       <div class="wrap nav">
+        <h1>Finaliser votre achat</h1>
         <nav style="margin-left:auto; display:flex; gap:10px;">
-          <a class="btn" href="admin.php" style="background:#ef4444;">Backend</a>   
+          
+          <a class="btn suppr" href="admin.php">admin</a>   
           <a class="btn" href="index.php">Accueil</a>
           <a class="btn" href="stock.php">Stock</a>
           <a class="btn" href="#contact">Contact</a>
@@ -56,7 +21,7 @@
         
       </div>  
       
-      <h1>Finaliser votre achat</h1>
+      
       <p>Veuillez remplir les informations ci-dessous.</p>
     </header>
 
@@ -78,8 +43,8 @@
       <label for="adresse">Adresse de livraison</label>
       <input type="text" id="adresse" placeholder="12 rue des Lilas, 75000 Paris">
 
-      <button type="submit">Confirmer l’achat</button>
+      <button class="submit" type="submit">Confirmer l’achat</button>
     </form>
-  <//div>div>
+  </div>
 </body>
 </html>

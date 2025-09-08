@@ -30,7 +30,14 @@ if (isset($_GET['delete'])) {
     $stmt = $pdo->prepare("DELETE FROM voitures WHERE id = :id");
     $stmt->execute(['id' => $id]);
     $message = "✅ Véhicule ID $id supprimé avec succès.";
+
+    // Réattribuer les IDs
+    $pdo->exec("SET @count = 0");
+    $pdo->exec("UPDATE voitures SET id = (@count:=@count+1) ORDER BY id");
+    $pdo->exec("ALTER TABLE voitures AUTO_INCREMENT = 1");
+
 }
+    
 
 // Recherche
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -48,7 +55,7 @@ $voitures = $stmt->fetchAll();
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Supprimer un véhicule</title>
+  <title>Gestion du stock</title>
   <style>
     body { margin:0; font-family:Arial,sans-serif; background:#f5f5f5; color:#111 }
     header { background:#222; color:#fff; padding:16px }
@@ -70,7 +77,7 @@ $voitures = $stmt->fetchAll();
 </head>
 <body>
   <header>
-    <h2>Back-office — Supprimer un véhicule</h2>
+    <h2>Back-office — Gestion du stock</h2>
   </header>
   <main class="wrap">
     <div class="card">
@@ -92,8 +99,7 @@ $voitures = $stmt->fetchAll();
             <th>Image</th>
             <th>Marque & Modèle</th>
             <th>Année</th>
-            <th>Couleur</th>
-            <th>Prix (€)</th>
+            <th>Prix</th>
             <th>Action</th>
           </tr>
           <?php foreach ($voitures as $v): ?>
@@ -108,9 +114,10 @@ $voitures = $stmt->fetchAll();
             </td>
             <td><?= htmlspecialchars($v['marque'].' '.$v['modele']) ?></td>
             <td><?= htmlspecialchars($v['annee']) ?></td>
-            <td><?= number_format($v['prix'], 0, ',', ' ') ?> €</td>
+            <td><?= number_format($v['prix'], 0, ',', ' ') ?></td>
             <td>
-              <a class="btn" href="supprimer.php?delete=<?= $v['id'] ?>" 
+              <a class="btn edit" href="modifier.php?id=<?= $v['id'] ?>">Modifier</a>
+              <a class="btn" href="gestion_stock.php?delete=<?= $v['id'] ?>" 
                  onclick="return confirm('Supprimer ce véhicule ?')">Supprimer</a>
             </td>
           </tr>

@@ -80,7 +80,7 @@ $voitures = $stmt->fetchAll();
             <?php endif; ?>
 
             <div class="title"><?php echo e($v['marque'] . ' ' . $v['modele']); ?></div>
-            <div class="price"><?php echo number_format((float)$v['prix'], 0, ',', ' '); ?></div>
+            <div class="price"><?php echo number_format((float)$v['prix'], 0, ',', ' '); ?> €</div>
             <div class="meta">Année <?php echo e($v['annee']); ?> • Ajouté le <?php echo (new DateTime($v['created_at']))->format('d/m/Y'); ?></div>
 
             <a href="detail.php?id=<?php echo e($v['id']); ?>" class="btn ok">Voir le détail</a>
