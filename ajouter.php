@@ -6,21 +6,7 @@ if (empty($_SESSION['logged'])) {
 }
 
 // Config BDD
-$DB_HOST = 'localhost';
-$DB_NAME = 'concession';
-$DB_USER = 'root';
-$DB_PASS = '';
-
-try {
-    $pdo = new PDO("mysql:host={$DB_HOST};dbname={$DB_NAME};charset=utf8mb4", $DB_USER, $DB_PASS, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-} catch (Throwable $e) {
-    http_response_code(500);
-    echo '<h1>Erreur de connexion à la base de données</h1>';
-    exit;
-}
+require 'config.php';
 
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -8,24 +8,7 @@ if (empty($_SESSION['client_id'])) {
 }
 
 // Connexion BDD
-$DB_HOST = 'localhost';
-$DB_NAME = 'concession';
-$DB_USER = 'root';
-$DB_PASS = '';
-
-try {
-    $pdo = new PDO("mysql:host={$DB_HOST};dbname={$DB_NAME};charset=utf8mb4", $DB_USER, $DB_PASS, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-} catch (Throwable $e) {
-    die("Erreur connexion BDD");
-}
-
-// Récupération des infos actuelles du client
-$stmt = $pdo->prepare("SELECT * FROM clients WHERE id = :id");
-$stmt->execute(['id' => $_SESSION['client_id']]);
-$client = $stmt->fetch();
+require 'config.php';
 
 $message = "";
 

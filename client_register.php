@@ -1,8 +1,7 @@
 <?php
+require 'config.php';
 session_start();
-$pdo = new PDO("mysql:host=localhost;dbname=concession;charset=utf8mb4", "root", "", [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-]);
+
 
 $msg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
