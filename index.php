@@ -83,7 +83,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
     <div class="wrap nav">
       <div class="logo">Auto<span>Concession</span></div>
       <nav style="margin-left:auto; display:flex; gap:10px;">
-        <a class="btn" href="#">Accueil</a>
+        <a class="btn suppr" href="panier.php">panier</a>
         <a class="btn" href="stock.php">Stock</a>
         <a class="btn" href="#contact">Contact</a>
         <a class="btn suppr" href="admin.php" style="color:white;text-decoration:none;">admin</a>
@@ -114,7 +114,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
 
     <section class="grid" aria-label="Modèles récemment ajoutés">
       <?php if (!$voitures): ?>
-        <div class="empty">Aucun véhicule pour le moment. Ajoutez des enregistrements dans la table <code>voitures</code> puis actualisez la page.</div>
+        <div class="empty">Aucun véhicule pour le moment. Ajoutez-en puis actualisez la page.</div>
       <?php else: ?>
         <?php foreach ($voitures as $v): ?>
           <?php
@@ -139,7 +139,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
               <?php endif; ?>
               <div class="actions">
                 <span class="pill">ID #<?php echo e($v['id']); ?></span>
-                <a class="btn ok" href="achat.php">Acheter</a>
+                <a class="btn ok" href="ajout_panier.php?id=<?= urlencode($v['id']) ?>">Ajouter au panier</a>
               </div>
             </div>
           </article>

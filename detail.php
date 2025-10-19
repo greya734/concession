@@ -44,7 +44,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
         <p><strong>Description :</strong> Ce véhicule est proposé par AutoConcession. Pour plus d'informations, contactez-nous ou passez commande via le formulaire d'achat.</p>
 
         <div class="actions">
-          <a href="achat.html" class="btn ok">Acheter ce véhicule</a>
+          <a href="panier.php?id=<?= urlencode($id) ?>" class="btn ok">ajouter au panier</a>
           <a href="stock.php" class="btn">Retour au stock</a>
         </div>
       </div>
